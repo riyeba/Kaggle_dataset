@@ -1,0 +1,19 @@
+name: Scalable Sync
+on: [push]
+
+jobs:
+  sync_data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Sync to Azure
+        run: |
+          # 1. Download the AzCopy tool
+          curl -L https://aka.ms/downloadazcopy-v10-linux -o azcopy.tar.gz
+          tar -xf azcopy.tar.gz --strip-components=1
+          
+          # 2. Sync ONLY THE CONTENTS of the 'data' folder
+          # Adding the /* tells the mover "take the files inside, but not the folder name"
+          ./azcopy sync "./data/*" "${{ secrets.BLOB_SERVICE_SAS_URL }}/datasource" --recursive
