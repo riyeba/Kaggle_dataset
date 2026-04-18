@@ -17,4 +17,4 @@ jobs:
 
           # 2. Sync ONLY the files inside your local 'data' folder
           # We point it specifically to the 'datasource' container room
-          ./azcopy sync "./data/*" "${{ secrets.BLOB_SERVICE_SAS_URL }}/datasource" --recursive
+          ./azcopy sync "./data/*" "${{ secrets.BLOB_SERVICE_SAS_URL }}" --recursive
